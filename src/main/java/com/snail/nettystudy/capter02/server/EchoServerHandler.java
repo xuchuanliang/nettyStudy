@@ -1,4 +1,4 @@
-package com.snail.nettystudy.capter02;
+package com.snail.nettystudy.capter02.server;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
