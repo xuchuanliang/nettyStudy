@@ -16,3 +16,18 @@ ChannelFuture---异步通知
 这些关系是：1.一个EventLoopGroup包含一个或多个EventLoop；2.一个EventLoop在它的生命周期内只和一个Thread绑定；3.所有由EventLoop处理的I/O
 事件都将在他专有的Thread上被处理；4.一个Channel在它的生命周期内只注册一个EventLoop；5.一个EventLoop可能会被分配给一个或多个Channel；
 注意：在这种设计中，一个给定的Channel的I/O操作都是由相同的Thread执行的，实际上消除了对于同步的需要。
+
+##ChannelHandler和ChannelPipeline
+### ChannelHandler
+>Netty的主要组件是ChannelHandler，它充当了所有处理入站和出站数据的应用程序逻辑的容器。
+###ChannelPipeline接口
+>ChannelPipeline提供了ChannelHandler链的容器，并定义了用于该链上传播入站和出站时间流的API。当Channel被创建时，他会被自动分配到他专属的CHannelPipeline。 如图2   
+>从一个客户端应用程序的角度来看，如果事件的运动方向是从客户端到服务端，那么我们称这些事件时出站，反之称为入站。
+## 引导
+>Netty的引导类为应用程序的网络层配置提供了容器，这涉及将一个进程绑定到某个指定的端口，或者将一个进程连接到另一个运行在某个指定主机的指定端口上的进程，通常来说，
+我们把前面的用例称作引导一个服务器，后面的用例称为引导一个客户端。因此，有两种类型的引导：一种用于客户端（简单称为Bootstrap），而另一种用于服务端（ServerBootStrap）
+
+#第四章 传输
+
+
+
