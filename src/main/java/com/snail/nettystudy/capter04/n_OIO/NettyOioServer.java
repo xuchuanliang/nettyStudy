@@ -10,11 +10,14 @@ import io.netty.channel.socket.oio.OioServerSocketChannel;
 import io.netty.util.CharsetUtil;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.*;
 
 /**
  * netty阻塞版本
+ * @author xuchuanliangbt
  */
 public class NettyOioServer {
+    public static ExecutorService myPool = new ThreadPoolExecutor(5,10,1000*60*60, TimeUnit.SECONDS,new ArrayBlockingQueue<>(1000));
     public void server(int port){
         final ByteBuf buf = Unpooled.unreleasableBuffer(Unpooled.copiedBuffer("hi,\r\n",CharsetUtil.UTF_8));
         EventLoopGroup group = new OioEventLoopGroup();

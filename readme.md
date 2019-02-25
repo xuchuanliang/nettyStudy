@@ -28,6 +28,16 @@ ChannelFuture---异步通知
 我们把前面的用例称作引导一个服务器，后面的用例称为引导一个客户端。因此，有两种类型的引导：一种用于客户端（简单称为Bootstrap），而另一种用于服务端（ServerBootStrap）
 
 #第四章 传输
+>每个Channel都将会分配一个ChannelPipeline和ChannelConfig。ChannelConfig包含了该Channel的所有配置设置，并且支持热更新。由于特定的传输可能有独特的设置，所有他可能会实现一个
+ChannelConfig的子类型。
+ChannelPipeline持有应用所有出站和入站数据以及事件的ChannelHandler实例，这些ChannelHandler实现了应用程序用于处理状态变化以及数据处理的逻辑。
+ChannelHandler的典型用于包括：1.将数据从一种格式转换成另一种合适；2.提供异常的通知；3.提供Channel变为活动或非活动的通知；4.提供当Channel注册到EventLoop或者从EventLoop
+注销时的通知；5.提供有关用户自定义事件的通知
 
+## 4.3 内置的传输
+### 4.3.1 NIO--非阻塞I/O
+>NIO提供了一个所有I/O操作的全异步的实现，它利用了自NIO子系统被引入JDK1.4时便可用的基于选择器的API。选择器背后的基本概念是充当一个注册表，在那里你将可以请求在Channel的状态
+发生变化时得到通知，可能的状态变化有：1.新的Channel已被接受并且就绪；2.Channel连接已经完成；3.Channel有已经就绪可供读取的数据；4.Channel可用于写数据。
+Netty选择并处理状态的流程如图3
 
 
