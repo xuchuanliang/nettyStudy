@@ -58,3 +58,24 @@ Netty选择并处理状态的流程如图3
 - 通过调用clear方法来将readIndex和writerIndex都设置为0，注意这并不会清除内存中的内容，调用clear方法比调用discardReadBytes轻量得多，因为他只是将索引重置而不会复制任何内存。
 - slice()方法和copy()方法，slice()方法是保持同一个引用，如果源或者新的数据改动，则所有的均改动，copy()是独立的拷贝，只要有可能，使用slice()方法来避免复制内存的开销。
 2019年3月19日 20:24:31 94/272
+
+# 第六章 ChannelHandler和ChannelPipeline
+## ChannelHandler
+> Channel的四个状态：ChannelUnregistered【Channel已经被创建，但还未注册到EventLoop】，
+ChannelRegistered【Channel已经被注册到EventLoop】，
+ChannelActive【Channel处于活跃状态，现在可以接收和发送数据】，
+ChannelInactive【Channel没有连接到远程节点】   
+>ChannelHandler的两个重要子接口：ChannelInboundHandler【处理入站数据以及各种状态变化】和ChannelOutboundHandler【处理出栈数据并且允许拦截所有的操作】
+
+2019年3月20日 12:31:08 100/272
+## 6.2 ChannelPipeline接口
+## 6.3 ChannelHandlerContext接口
+- ChannelHandlerContext代表了ChannelHandler和ChannelPipeline之间的关联，每当有ChannelHandler添加至ChannelPipeline中时，都会创建ChannelHandlerContext
+- 当使用ChannelHandlerContext的API的时候，牢记以下两点：1.ChannelHandlerContext和ChannelHandler之间的关系（绑定）是永远不会改变的，所以缓存对它的引用是安全的；2.相对于
+其他类的同名方法，ChannelHandlerContext的方法将产生更短的事件流，应该尽可能的利用这个特性来获得最大性能。
+>**ChannelHandlerContext有很多方法，其中一些方法也存在于Channel和ChannelPipeline本身上，但是有一点不同，如果调用Channel或者ChannelPipeline上的这些方法，它们将沿着整个ChannelPipeline进行传播。
+而调用位于ChannelHandlerContext上的相同方法，则将从当前所关联的ChannelHandler开始，并且只会传播给位于该ChannelPipeline中的下一个能够处理该事件的ChannelHandler**
+- Channel、ChannelPipeline、ChannelHandler以及ChannelHandlerContext之间的关系如图4
+- 通过Channel或者ChannelPipeline进行事件传播如图5
+
+2019年3月22日 12:28:39 107/272
