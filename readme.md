@@ -70,12 +70,17 @@ ChannelInactive【Channel没有连接到远程节点】
 2019年3月20日 12:31:08 100/272
 ## 6.2 ChannelPipeline接口
 ## 6.3 ChannelHandlerContext接口
-- ChannelHandlerContext代表了ChannelHandler和ChannelPipeline之间的关联，每当有ChannelHandler添加至ChannelPipeline中时，都会创建ChannelHandlerContext
+- **ChannelHandlerContext代表了ChannelHandler和ChannelPipeline之间的关联，每当有ChannelHandler添加至ChannelPipeline中时，都会创建ChannelHandlerContext**
 - 当使用ChannelHandlerContext的API的时候，牢记以下两点：1.ChannelHandlerContext和ChannelHandler之间的关系（绑定）是永远不会改变的，所以缓存对它的引用是安全的；2.相对于
 其他类的同名方法，ChannelHandlerContext的方法将产生更短的事件流，应该尽可能的利用这个特性来获得最大性能。
 >**ChannelHandlerContext有很多方法，其中一些方法也存在于Channel和ChannelPipeline本身上，但是有一点不同，如果调用Channel或者ChannelPipeline上的这些方法，它们将沿着整个ChannelPipeline进行传播。
 而调用位于ChannelHandlerContext上的相同方法，则将从当前所关联的ChannelHandler开始，并且只会传播给位于该ChannelPipeline中的下一个能够处理该事件的ChannelHandler**
 - Channel、ChannelPipeline、ChannelHandler以及ChannelHandlerContext之间的关系如图4
 - 通过Channel或者ChannelPipeline进行事件传播如图5
+- 通过ChannelHandlerContext触发的操作的事件流，如图6
+>因为一个ChannelHandler可以从属于多个ChannelPipeline，所以它可以绑定到多个ChannelHandlerContext实例。对于这种用法指在多个ChannelPipeline中共享同一个ChannelHandler，对应的ChannelHandler必须要使用@Sharable
+注解标注；否则试图将它添加到多个ChannelPipeline时会触发异常。显而易见，为了安全的被用于多个并发的Channel，这样的ChannelHandler必须是线程安全的。
+## 6.4异常处理
 
-2019年3月22日 12:28:39 107/272
+# 第七章 EventLoop和线程模型
+2019年3月25日 08:15:48  114/272
