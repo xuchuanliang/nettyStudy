@@ -109,8 +109,17 @@ ChannelInactive【Channel没有连接到远程节点】
 # 第八章 引导
 - 引导是将ChannelPipeline，ChannelHandler和EventLoop组织起来，成为一个实际可用的应用程序
 - 引导一个应用程序是指对他进行配置，并使它运行起来的过程。
-# 8.1 BootStrap类
+## 8.1 BootStrap类
 - 类层次图参考图10
 > 相对于具体的引导类分别看作用域服务器和客户端的引导来说，服务器致力于使用一个父的Channel来接受来自于客户端的连接，并创建子Channel以用于他们之间的通信；
 而客户端最可能只需要一个单独的，没有父Channel的Channel来用于所有的网络交互。        
 2019年4月25日 12:27:05 125/272
+
+## 8.2 引导客户端和无链接协议
+- 在引导过程中，在调用bind()或者connect之前，必须调用以下方法来设置所需的组件：
+1.group();2.channel()或者channelFactory();3.handler(),如果不这样做，会导致异常，对handler的调用尤其重要，因为它需要配置好ChannelPipeline.
+
+## 8.3 引导服务器
+- ServerBootStrap引导过程如图11
+
+2019年4月28日 11:53:55 137/272
